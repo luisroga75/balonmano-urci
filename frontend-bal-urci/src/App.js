@@ -1,20 +1,28 @@
+// src/App.js
 import React from 'react';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import AuthPage from './pages/AuthPage';
+import { useAuth } from './context/AuthContext';
+
+const Home = () => <h2>Web principal protegida (aquí irá tu app real)</h2>;
 
 function App() {
+  const { user } = useAuth();
+
   return (
-    <Container style={{ textAlign: 'center', marginTop: '50px' }}>
-      <Typography variant="h3" color="primary" gutterBottom>
-        ¡Bienvenidos a Balonmano URCI!
-      </Typography>
-      <Button variant="contained" color="primary">
-        Botón de prueba
-      </Button>
-    </Container>
+    <BrowserRouter>
+      <Routes>
+        <Route 
+          path="/" 
+          element={user ? <Home /> : <Navigate to="/auth" replace />} 
+        />
+        <Route 
+          path="/auth" 
+          element={!user ? <AuthPage /> : <Navigate to="/" replace />} 
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
 export default App;
-
