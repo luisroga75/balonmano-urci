@@ -4,6 +4,8 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 import AddJornada from '../components/jornadas/AddJornada';
 import { useAuth } from '../context/AuthContext';
+import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 export default function Jornadas() {
   const [jornadas, setJornadas] = useState([]);
@@ -11,6 +13,7 @@ export default function Jornadas() {
   const [categoria, setCategoria] = useState('infantil');
   const [genero, setGenero] = useState('masculino');
   const [numeroJornada, setNumeroJornada] = useState(1);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const obtenerJornadas = async () => {
@@ -82,6 +85,15 @@ export default function Jornadas() {
                 <Typography variant="subtitle1" sx={{ mt: 1 }}>
                   Resultado: {jornada.goles_local} - {jornada.goles_visitante}
                 </Typography>
+                {rol === 'admin' && (
+                    <Button 
+                      variant="outlined" 
+                      sx={{mt:2}}
+                      onClick={() => navigate(`/jornadas/editar/${jornada.id}`)}
+                    >
+                      Editar
+                    </Button>
+                            )}
               </CardContent>
             </Card>
           </Grid>

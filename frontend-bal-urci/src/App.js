@@ -9,6 +9,7 @@ import Jornadas from './pages/Jornadas';
 import Clasificacion from './pages/Clasificacion';
 import Container from '@mui/material/Container';
 import EditEquipo from './components/equipos/EditEquipo';
+import EditJornada from './components/jornadas/EditJornada';
 
 const Home = () => (
   <Container sx={{ mt: 4 }}>
@@ -28,6 +29,7 @@ function App() {
         <Route path="/equipos" element={user ? <Equipos /> : <Navigate to="/auth" replace />} />
         <Route path="/equipos/editar/:id" element={rol === 'admin' ? <EditEquipo /> : <Navigate to="/" replace />} />
         <Route path="/jornadas" element={user ? <Jornadas /> : <Navigate to="/auth" replace />} />
+        <Route path="/jornadas/editar/:id" element={rol === 'admin' ? <EditJornada /> : <Navigate to="/" replace />} />
         <Route path="/clasificacion" element={user ? <Clasificacion /> : <Navigate to="/auth" replace />} />
       </Routes>
     </BrowserRouter>
