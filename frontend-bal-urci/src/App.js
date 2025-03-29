@@ -8,6 +8,7 @@ import Equipos from './pages/Equipos';
 import Jornadas from './pages/Jornadas';
 import Clasificacion from './pages/Clasificacion';
 import Container from '@mui/material/Container';
+import EditEquipo from './components/equipos/EditEquipo';
 
 const Home = () => (
   <Container sx={{ mt: 4 }}>
@@ -16,7 +17,7 @@ const Home = () => (
 );
 
 function App() {
-  const { user } = useAuth();
+  const { user, rol } = useAuth();
 
   return (
     <BrowserRouter>
@@ -25,6 +26,7 @@ function App() {
         <Route path="/" element={user ? <Home /> : <Navigate to="/auth" replace />} />
         <Route path="/auth" element={!user ? <AuthPage /> : <Navigate to="/" replace />} />
         <Route path="/equipos" element={user ? <Equipos /> : <Navigate to="/auth" replace />} />
+        <Route path="/equipos/editar/:id" element={rol === 'admin' ? <EditEquipo /> : <Navigate to="/" replace />} />
         <Route path="/jornadas" element={user ? <Jornadas /> : <Navigate to="/auth" replace />} />
         <Route path="/clasificacion" element={user ? <Clasificacion /> : <Navigate to="/auth" replace />} />
       </Routes>
